@@ -50,20 +50,24 @@ class View:
         self.input_responsabile = ft.TextField(value=self.controller.get_responsabile(), label="Responsabile")
 
         # ListView per mostrare la lista di strumenti aggiornata
-        self.lista_strumenti = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
+        self.lista_strumenti = ft.ListView(height=200, spacing=5, padding=10, auto_scroll=True)
 
         # TextField per ricerca strumento per tipo
-        self.input_tipo_strumento = ft.TextField(label="Tipo")
+        self.input_tipo_strumento = ft.TextField(label="Tipo", hint_text = "Es. Chitarra")
 
         # ListView per mostrare il risultato della ricerca strumenti per tipo
-        self.lista_strumenti_ricerca = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
+        self.lista_strumenti_ricerca = ft.ListView(height = 200, spacing=5, padding=10, auto_scroll=True)
 
         # --- PULSANTI e TOGGLE associati a EVENTI ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
         pulsante_conferma_responsabile = ft.Button("Conferma", on_click=self.controller.conferma_responsabile)
 
         # Altri Pulsanti da implementare (es. "Mostra" e "Cerca")
-        # TODO
+        #pulsante per mostrare tutti gli strumenti
+        pulsante_mostra = ft.Button("Mostra", on_click=self.controller.mostra_strumenti)
+
+        #pulsante per cercare gli strumenti per tipo
+        pulsante_cerca = ft.Button("Cerca", on_click=self.controller.cerca_strumenti)
 
         # --- LAYOUT ---
         self.page.add(
@@ -76,19 +80,33 @@ class View:
 
             # Sezione 2
             ft.Text("Modifica Informazioni", size=20),
-            ft.Row(spacing=200,
+            ft.Row(spacing=20,
                    controls=[self.input_responsabile, pulsante_conferma_responsabile],
                    alignment=ft.MainAxisAlignment.CENTER),
             ft.Divider(),
 
             # Sezione 3
-            # TODO
+            # lista degli strumenti
+            ft.Text("Strumenti", size = 20),
+            pulsante_mostra,
+            self.lista_strumenti,
+
+            ft.Divider(),
 
             # Sezione 4
-            # TODO
-        )
+            # ricerca per tipo
+            ft.Text("Cerca Strumento per Tipo", size = 20),
+            ft.Row(controls=[self.input_tipo_strumento, pulsante_cerca], alignment=ft.MainAxisAlignment.CENTER, spacing = 20),
+            self.lista_strumenti_ricerca)
+        self.page.update()
 
+#cambia il tema della pagina
     def cambia_tema(self, e):
-        self.page.theme_mode = ft.ThemeMode.DARK if self.toggle_cambia_tema.value else ft.ThemeMode.LIGHT
-        self.toggle_cambia_tema.label = "Tema scuro" if self.toggle_cambia_tema.value else "Tema chiaro"
+        if self.toggle_cambia_tema.value:
+            self.page.theme_mode = ft.ThemeMode.DARK
+            self.toggle_cambia_tema.label = "Tema scuro"
+        else:
+            self.page.theme_mode = ft.ThemeMode.LIGHT
+            self.toggle_cambia_tema.label = "Tema chiaro"
+        #aggiorno la pagina
         self.page.update()
