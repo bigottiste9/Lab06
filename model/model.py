@@ -59,7 +59,7 @@ class DepositoStrumenti:
             for riga in risutati:
                 strumento = Strumento(riga["codice"], riga["tipo"], riga["marca"], riga["anno_acquisto"], riga["valore"], riga["disponibile"])
                 strumenti.append(strumento)
-                return strumenti
+            return strumenti
         except Exception as e:
             print("Errore durante la ricerca degli strumenti : ", e)
             return None
@@ -94,7 +94,7 @@ class DepositoStrumenti:
             for riga in risutati:
                 strumento = Strumento(riga["codice"], riga["tipo"], riga["marca"], riga["anno_acquisto"], riga["valore"], riga["disponibile"])
                 strumenti.append(strumento)
-                return strumenti
+            return strumenti
         except Exception as e:
             print("Errore durante la ricerca degli strumenti : ", e)
             return None
